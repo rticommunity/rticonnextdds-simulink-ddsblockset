@@ -41,11 +41,11 @@ To correctly install the `RTI Connext for DDS Blockset` you have two options:
 2. Use the [MathWorks File Exchange](https://www.mathworks.com/matlabcentral/fileexchange/) web portal.
 
 In both cases, the add-on to be installed is shown in the following picture:
-![RTI Connext for DDS Blockset toolbox](rti_connext_for_dds_blockset_add_on.png)
+![RTI Connext for DDS Blockset toolbox](./img/rti_connext_for_dds_blockset_add_on.png)
 
 
 # Installation requirements
 
 The `RTI Connext for DDS Blockset` requires the following software:
  * MATLAB 2021a, or later
- * DDS Blockset
+ * MathWorks [DDS Blockset](https://www.mathworks.com/products/dds.html)
