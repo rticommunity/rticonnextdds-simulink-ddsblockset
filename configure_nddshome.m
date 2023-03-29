@@ -16,10 +16,13 @@ function configure_nddshome()
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
     %   installation path RTI Connext DDS
-    configure_nddshome_w_version("6.0.1");
+    connext_version = "6.1.1";
+    supported_versions = ["6.0.1", "6.1.1"];
+
+    configure_nddshome_w_version(connext_version, supported_versions);
 end
 
-function configure_nddshome_w_version(version)
+function configure_nddshome_w_version(version, supported_versions)
     % CONFIGURE_NDDSHOME_W_VERSION set NDDSHOME to the specific version if
     % it is not already set.
     %   configure_nddshome("6.0.1") configure NDDSHOME to RTI Connext 6.0.1
@@ -29,14 +32,25 @@ function configure_nddshome_w_version(version)
     nddshomePath = string(getenv("NDDSHOME"));
     % If NDDSHOME is already set, check it points to a supported version
     if nddshomePath ~= ""
-        if is_rti_connext_dds_version_supported(nddshomePath) == false
+        if is_rti_connext_dds_version_supported(nddshomePath,...
+                supported_versions) == false
             % NDDSHOME is not set to a supported version. In case it is set
             % to a supported version, do not set it again to the RTI
             % Connext for DDS Blockset toolbox
+            product_supported_versions = "";
+            for i = 1:length(supported_versions)
+                product_supported_versions = product_supported_versions +...
+                        " - RTI Connext DDS " + supported_versions{i};
+                if i ~= length(supported_versions)
+                    product_supported_versions =...
+                            product_supported_versions + newline;
+                end
+            end
+
             warning('%s\n%s\n',...
                 ['NDDSHOME environment variable is not set ',...
                 'to a supported version. Current supported versions:'],...
-                ' - RTI Connext DDS 6.0.1');
+                product_supported_versions);
         end
     else
         % Set NDDSHOME to the latest installed RTI Connext for DDS Blockset
@@ -50,15 +64,17 @@ function configure_nddshome_w_version(version)
     end
 end
 
-function ok = is_rti_connext_dds_version_supported(nddshome)
+function ok = is_rti_connext_dds_version_supported(nddshome, supported_versions)
     % IS_RTI_CONNEXT_DDS_VERSION_SUPPORTED check whether the current
     % nddshome is pointing to a supported version
     %   is_rti_connext_dds_version_supported() return true if that nddshome
     %   is supported
 
     ok = false;
-    if contains(nddshome, 'rti_connext_dds-6.0.1')
-        ok = true;
+    for i = 1:length(supported_versions)
+        if contains(nddshome, strcat('rti_connext_dds-',supported_versions{i}))
+            ok = true;
+        end
     end
 end
 

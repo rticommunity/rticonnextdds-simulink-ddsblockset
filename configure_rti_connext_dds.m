@@ -20,11 +20,11 @@ function configure_rti_connext_dds()
     add_configure_nddshome_startup();
     configure_nddshome();
 
-    version = "6.0.1";
     % NDDSHOME is set in configure_nddshome() to a supported version
+    connext_version = "6.1.1";
     connextPath = string(getenv("NDDSHOME"));
-    shortcutName = append("RTI Launcher ", version);
-    create_rti_launcher_shortcut(shortcutName, connextPath, version);
+    shortcutName = append("RTI Launcher ", connext_version);
+    create_rti_launcher_shortcut(shortcutName, connextPath, connext_version);
 
     move_license_file(connextPath)
 end
