@@ -22,11 +22,6 @@ Simulink and non-Simulink components through the DDS databus.
 Users can generate code from Simulink models and deploy their models integrated
 with RTI Connext DDS.
 
-The `RTI Connext for DDS Blockset` toolbox allows you to install an evaluation
-bundle of RTI Connext DDS for use only with the MathWorks [DDS Blockset](https://www.mathworks.com/products/dds.html).
-
-Review the [License Agreement](RTI_License_Agreement.pdf) file for more details.
-
 # About this repository
 
 This repository is **not intended to be cloned or used directly**. Its purpose
