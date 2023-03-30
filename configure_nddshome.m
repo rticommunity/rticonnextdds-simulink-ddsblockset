@@ -16,8 +16,8 @@ function configure_nddshome()
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
     %   installation path RTI Connext DDS
-    connext_version = "6.1.1";
-    supported_versions = ["6.0.1", "6.1.1"];
+    connext_version = "6.1.2";
+    supported_versions = ["6.0.1", "6.1.1","6.1.2"];
 
     configure_nddshome_w_version(connext_version, supported_versions);
 end
