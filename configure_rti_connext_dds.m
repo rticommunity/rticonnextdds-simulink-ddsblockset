@@ -18,11 +18,11 @@ function configure_rti_connext_dds()
     %   configure_rti_connext_dds() configures RTI Connext DDS
 
     add_configure_nddshome_startup();
-    
+
     % NDDSHOME is set in configure_nddshome() to a supported version and
     % the version is returned in connext_version
     connext_version = configure_nddshome();
-    
+
     connextPath = string(getenv("NDDSHOME"));
     shortcutName = append("RTI Launcher ", connext_version);
     create_rti_launcher_shortcut(shortcutName, connextPath, connext_version);
