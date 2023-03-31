@@ -11,23 +11,23 @@
 %  incidental or consequential damages arising out of the use or inability to %
 %  use the software.                                                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function connext_version = configure_nddshome()
+function connextVersion = configure_nddshome()
     % CONFIGURE_NDDSHOME set NDDSHOME to the corresponding version if
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
     %   installation path RTI Connext DDS
-    connext_version = "6.1.2";
+    connextVersion = "6.1.2";
 
     if isMATLABReleaseOlderThan('R2023a')
-        supported_versions = ["6.0.1"];
+        supportedVersions = ["6.0.1"];
     else
-        supported_versions = ["6.1.0", "6.1.1", "6.1.2"];
+        supportedVersions = ["6.1.0", "6.1.1", "6.1.2"];
     end
 
-    configure_nddshome_w_version(connext_version, supported_versions);
+    configure_nddshome_w_version(connextVersion, supportedVersions);
 end
 
-function configure_nddshome_w_version(version, supported_versions)
+function configure_nddshome_w_version(version, supportedVersions)
     % CONFIGURE_NDDSHOME_W_VERSION set NDDSHOME to the specific version if
     % it is not already set.
     %   configure_nddshome("6.0.1") configure NDDSHOME to RTI Connext 6.0.1
@@ -38,25 +38,26 @@ function configure_nddshome_w_version(version, supported_versions)
     % If NDDSHOME is already set, check it points to a supported version
     if nddshomePath ~= ""
         if is_rti_connext_dds_version_supported(nddshomePath,...
-                supported_versions) == false
+                supportedVersions) == false
             % NDDSHOME is not set to a supported version. In case it is set
             % to a supported version, do not set it again to the RTI
             % Connext for DDS Blockset toolbox
-            product_supported_versions = "";
-            for i = 1:length(supported_versions)
-                product_supported_versions = product_supported_versions +...
-                        " - RTI Connext DDS " + supported_versions{i};
-                if i ~= length(supported_versions)
-                    product_supported_versions =...
-                            product_supported_versions + newline;
+            productSupportedVersions = "";
+            for i = 1:length(supportedVersions)
+                productSupportedVersions = productSupportedVersions +...
+                        " - RTI Connext DDS " + supportedVersions{i};
+                if i ~= length(supportedVersions)
+                    productSupportedVersions =...
+                            productSupportedVersions + newline;
                 end
             end
 
-            warning('%s\n%s\n',...
-                ['NDDSHOME environment variable is not set ',...
-                'to a supported version for your version of MATLAB. '...
-                'Current supported versions:'],...
-                product_supported_versions);
+            warning(['NDDSHOME environment variable is not set ',...
+                    'to a supported version for MATLAB/DDS Blockset. ',...
+                    'Supported Connext versions for MATLAB %s:\n',...
+                    '%s'],...
+                matlabRelease.Release,...
+                productSupportedVersions);
         end
     else
         % Set NDDSHOME to the latest installed RTI Connext for DDS Blockset
