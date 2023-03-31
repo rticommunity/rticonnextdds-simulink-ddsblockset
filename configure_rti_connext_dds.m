@@ -18,6 +18,7 @@ function configure_rti_connext_dds()
     %   configure_rti_connext_dds() configures RTI Connext DDS
 
     add_configure_nddshome_startup();
+
     % NDDSHOME is set in configure_nddshome() to a supported version and
     % the version is returned in connext_version
     connext_version = configure_nddshome();
@@ -186,5 +187,8 @@ function create_rti_launcher_shortcut_mac(shortcutName, connextPath)
     connextPath = strrep(connextPath, ' ', '\ ');
     shortcutName = strrep(shortcutName, ' ', '\ ');
 
-    system(append("ln -s ", connextPath, "/RTI\ Launcher.app ~/Desktop/", shortcutName));
+    % if the file doesn't exist
+    if ~isfile(append('~/Desktop/', shortcutName))
+        system(append("ln -s ", connextPath, "/RTI\ Launcher.app ~/Desktop/", shortcutName));
+    end
 end
