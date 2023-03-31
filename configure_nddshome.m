@@ -11,13 +11,18 @@
 %  incidental or consequential damages arising out of the use or inability to %
 %  use the software.                                                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function configure_nddshome()
+function connext_version = configure_nddshome()
     % CONFIGURE_NDDSHOME set NDDSHOME to the corresponding version if
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
     %   installation path RTI Connext DDS
     connext_version = "6.1.2";
-    supported_versions = ["6.0.1", "6.1.1","6.1.2"];
+
+    if isMATLABReleaseOlderThan('R2023a')
+        supported_versions = ["6.0.1"];
+    else
+        supported_versions = ["6.1.0", "6.1.1", "6.1.2"];
+    end
 
     configure_nddshome_w_version(connext_version, supported_versions);
 end
@@ -49,7 +54,8 @@ function configure_nddshome_w_version(version, supported_versions)
 
             warning('%s\n%s\n',...
                 ['NDDSHOME environment variable is not set ',...
-                'to a supported version. Current supported versions:'],...
+                'to a supported version for your version of MATLAB. '...
+                'Current supported versions:'],...
                 product_supported_versions);
         end
     else
