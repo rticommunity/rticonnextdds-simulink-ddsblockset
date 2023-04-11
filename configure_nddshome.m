@@ -11,7 +11,7 @@
 %  incidental or consequential damages arising out of the use or inability to %
 %  use the software.                                                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function connextVersion = configure_nddshome()
+function configure_nddshome()
     % CONFIGURE_NDDSHOME set NDDSHOME to the corresponding version if
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
