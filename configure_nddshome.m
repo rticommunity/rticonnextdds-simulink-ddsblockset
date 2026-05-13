@@ -16,12 +16,15 @@ function configure_nddshome()
     % it is not already set.
     %   configure_nddshome() configure NDDSHOME to the corresponding
     %   installation path RTI Connext DDS
-    connextVersion = "6.1.2";
+    connextVersion = "7.3.1";
+
 
     if isMATLABReleaseOlderThan('R2023a')
         supportedVersions = ["6.0.1"];
-    else
+    elseif isMATLABReleaseOlderThan('R2026a')
         supportedVersions = ["6.1.0", "6.1.1", "6.1.2"];
+    else
+        supportedVersions = ["7.3.1"];
     end
 
     configure_nddshome_w_version(connextVersion, supportedVersions);
@@ -100,18 +103,5 @@ function connextPath = get_rti_connext_dds_path(version)
     % RTI Connext DDS installation.
     %   connextPath = get_rti_connext_dds_path("6.0.1") returns the
     % RTI Connext DDS installation folder of the specific version (6.0.1).
-    packageName = append("RTI Connext DDS ", version);
-
-    if ismac
-        connextPath = rticonnextdds_simulink_ddsblockset.getInstallationLocation(...
-                packageName + " - MacOS");
-    elseif isunix
-        connextPath = rticonnextdds_simulink_ddsblockset.getInstallationLocation(...
-                packageName + " - Linux");
-    elseif ispc
-        connextPath = rticonnextdds_simulink_ddsblockset.getInstallationLocation(...
-                packageName + " - Windows");
-    else
-        error('Unsupported OS');
-    end
+    connextPath = get_connext_installation_location(version);
 end

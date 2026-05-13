@@ -21,22 +21,21 @@ function configure_rti_connext_dds()
     configure_nddshome();
 
     % NDDSHOME is set in configure_nddshome() to a supported version
-    connextVersion = "6.1.2";
+    connextVersion = "7.3.1";
 
     connextPath = string(getenv("NDDSHOME"));
     shortcutName = append("RTI Launcher ", connextVersion);
     create_rti_launcher_shortcut(shortcutName, connextPath, connextVersion);
 
-    move_license_file(connextPath)
+    move_license_file(connextPath, connextVersion)
 end
 
-function move_license_file(connextPath)
+function move_license_file(connextPath, connextVersion)
     % MOVE_LICENSE_FILE move the license file from its corresponding
     % dependency to RTI Connext DDS dependency
     %   move_license_file() move the corresponding RTI Connext DDS license
 
-    licensePath = rticonnextdds_simulink_ddsblockset.getInstallationLocation(...
-                "RTI Connext DDS - License");
+    licensePath = get_connext_license_installation_location(connextVersion);
     outputLicenseFilePath = append(connextPath, "/rti_license.dat");
 
     if isfile(outputLicenseFilePath)
@@ -190,5 +189,35 @@ function create_rti_launcher_shortcut_mac(shortcutName, connextPath)
     % if the file doesn't exist
     if ~isfile(append('~/Desktop/', shortcutName))
         system(append("ln -s ", connextPath, "/RTI\ Launcher.app ~/Desktop/", shortcutName));
+    end
+end
+
+function licensePath = get_connext_license_installation_location(version)
+    % GET_CONNEXT_LICENSE_INSTALLATION_LOCATION returns the RTI Connext DDS
+    % license installation path for a given version.
+    %
+    %   licensePath = get_connext_license_installation_location('6.1.2')
+    %
+    % 3rdPartyFolder: 'RTIConnextDDS_License'  (no OS suffix for the license)
+    % ConnextFolder:  'rti_connext_dds-<version>-license'
+
+    scriptDir             = fileparts(mfilename('fullpath'));
+    additionalSoftwareDir = fullfile(scriptDir, '..', 'Additional Software');
+
+    % 3rdPartyFolder: always 'RTIConnextDDS_License' regardless of OS
+    thirdPartyFolderPath = fullfile(additionalSoftwareDir, 'RTIConnextDDS_License');
+
+    if ~isfolder(thirdPartyFolderPath)
+        error('get_connext_license_installation_location: License Add-On folder not found: %s', ...
+              thirdPartyFolderPath);
+    end
+
+    % ConnextFolder: e.g. 'rti_connext_dds-6.1.2-license'
+    connextFolder = 'rti_connext_dds-' + version + '-license';
+    licensePath   = fullfile(thirdPartyFolderPath, connextFolder);
+
+    if ~isfolder(licensePath)
+        error('get_connext_license_installation_location: license folder not found: %s', ...
+              licensePath);
     end
 end

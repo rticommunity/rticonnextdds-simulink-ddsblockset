@@ -44,3 +44,18 @@ In both cases, the add-on to be installed is shown in the following picture:
 The `RTI Connext for DDS Blockset` requires the following software:
  * MATLAB 2021a, or later
  * MathWorks [DDS Blockset](https://www.mathworks.com/products/dds.html)
+
+# Upgrading to a new RTI Connext DDS version
+
+When a new version of RTI Connext DDS is released, update the following
+locations. Replace the old version string (e.g. `6.1.2`) with the new one
+everywhere it appears.
+
+## 1. `configure_nddshome.m`
+
+Function configure_nddshome defines the current version and supported version
+
+## 2. `configure_rti_connext_dds.m`
+
+Function configure_rti_connext_dds, the target version used for the launcher
+shortcut and license copy, `connextVersion = "6.1.2";`
